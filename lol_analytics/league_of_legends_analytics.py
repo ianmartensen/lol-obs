@@ -35,7 +35,6 @@ def lol_rank():
                     my_rank = requests.get(f'{RG_BASE_URL}/{ranked_info}', headers=HEADERS)
                     if my_rank.status_code == 200:
                         response = my_rank.json()[0]
-                        print(response)
                         rank = (
                             f'{response["tier"]} {response["rank"]} - {response["leaguePoints"]} LP\n'
                             f'Wins: {response["wins"]} - Losses: {response["losses"]}'

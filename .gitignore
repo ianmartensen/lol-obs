@@ -1,5 +1,9 @@
 # Custom
 config.py
+test.py
+samples/
+match_history.db
+stats.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

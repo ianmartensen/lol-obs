@@ -1,6 +1,7 @@
 import obspython as obs
 from utils.utils import Summoner, get_lol_rank, update_match_history, live_matchup
 import urllib3
+import requests
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -28,7 +29,10 @@ def set_source_text(src, string):
 
 
 def rank():
-    summoner = Summoner('PianIan')
+    try:
+        summoner = Summoner('PianIan')
+    except requests.exceptions.ConnectionError:
+        print('API is unavailable.')
     srcs = obs.obs_enum_sources()
     for src in srcs:
         if obs.obs_source_get_id(src) == 'text_gdiplus_v2' and obs.obs_source_get_name(src) == 'Current Rank':
@@ -38,7 +42,10 @@ def rank():
 
 
 def matchup():
-    summoner = Summoner('PianIan')
+    try:
+        summoner = Summoner('PianIan')
+    except requests.exceptions.ConnectionError:
+        print('API is unavailable.')
     srcs = obs.obs_enum_sources()
     for src in srcs:
         if obs.obs_source_get_id(src) == 'text_gdiplus_v2' and obs.obs_source_get_name(src) == 'Matchup':
@@ -48,7 +55,10 @@ def matchup():
 
 
 def match_history():
-    summoner = Summoner('PianIan')
+    try:
+        summoner = Summoner('PianIan')
+    except requests.exceptions.ConnectionError:
+        print("Riot Games API is currently unavailable.")
     update_match_history(summoner)
 
 

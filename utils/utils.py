@@ -19,7 +19,7 @@ class Summoner:
             'Content-Type': 'application/json',
             'X-Riot-Token': os.environ.get('API_KEY')
         }
-        r = requests.get(f'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{self.name}', headers=headers)
+        r = requests.get(url=f'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{self.name}', headers=headers)
         if r.status_code == 200:
             r = r.json()
             self.encrypted_summoner_id = r['id']
@@ -117,7 +117,7 @@ def live_matchup(summoner):
 
     for enemy in response:
         if enemy['summonerName'] != summoner.name and enemy['position'] == my_lane:
-            enemy_champion = enemy['summonerName'].lower()
+            enemy_champion = enemy['position'].lower()
 
     stats = sqlite3.connect(rf'{os.environ.get("STATS")}')
     cur = stats.cursor()
@@ -130,7 +130,7 @@ def live_matchup(summoner):
         """, {'me': my_champion, 'enemy': enemy_champion}).fetchone()
 
     if len(percentage) == 0 or percentage[0] is None:
-        return 'No Matchup Data'
+        return 'No Matchup Data Available.'
     else:
         return f'Matchup: {my_champion} vs. {enemy_champion} - winrate: {round(int(percentage[0]), 2)}%'
 
